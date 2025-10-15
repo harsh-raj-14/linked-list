@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node *next;
+    node(int x)
+    {
+        data = x;
+        next = nullptr;
+    }
+};
+//worst approach
+//t-O(N^2)
+//S-O(1)
+// 'node *rotate(node *head,int k)
+// {
+//      if (!head || !head->next || k == 0) 
+//         return head;
+//     //if k=34 then only 34%5=4times
+//     int n = 1;
+//     node* len = head;
+//     while (len->next) {
+//         len = len->next;
+//         n++;
+//     }
+//     k = k % n; 
+//   while(k)
+//   {
+//     node*temp=head;
+//     while(temp->next->next)
+//     {
+//         temp=temp->next;
+//     }
+//     node*newnode=temp->next;
+//     temp->next=NULL;
+//     newnode->next=head;
+//     head=newnode;
+//     k--;
+//   }
+// return head;
+// }
+
+
+//best approach
+//T-O(N)
+//S-O(1)
+node *rotate(node *head,int k)
+{
+     if (!head || !head->next || k == 0) 
+        return head;
+    node*slow=head;
+    node*fast=head;
+    int n = 1;
+    node* len = head;
+    while (len->next) {
+        len = len->next;
+        n++;
+    }
+    k = k % n; 
+    for(int i=0;i<k;i++)
+    {
+    fast=fast->next;
+    }
+    while(fast->next)
+    {
+        slow=slow->next;
+        fast=fast->next;
+    }
+    node* newHead = slow->next;
+    slow->next = NULL;
+    fast->next = head;
+    return newHead;
+}
+node *convertArr2LL(vector<int> &v)
+{
+    if (v.empty())
+        return nullptr;
+    node *head = new node(v[0]);
+    node *mover = head;
+    for (int i = 1; i < v.size(); i++)
+    {
+        mover->next = new node(v[i]);
+        mover = mover->next;
+    }
+    return head;
+}
+void print(node *ad)
+{
+    node *temp = ad;
+    while (temp)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << "\n";
+}
+int main()
+{
+    vector<int> v1 = {1,2,3,4,5};
+    node *head1 = convertArr2LL(v1);
+    int k=2;
+    node *sumHead = rotate(head1,k);
+    print(sumHead);
+}
