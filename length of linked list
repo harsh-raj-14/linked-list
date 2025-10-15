@@ -1,0 +1,27 @@
+/*
+class Node {
+  public:
+    int data;
+    Node *next;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    int getCount(Node* head) {
+        // Code here
+       Node*temp=head;
+       int c=0;
+       while(temp)
+       {
+           temp=temp->next;
+           c++;
+       }
+       return c;
+    }
+};
